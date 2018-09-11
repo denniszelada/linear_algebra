@@ -1,3 +1,5 @@
+from math import sqrt
+
 class Vector(object):
     def __init__(self, coordinates):
         try:
@@ -32,6 +34,18 @@ class Vector(object):
         new_coordinates = [c*x for x in self.coordinates]
         return Vector(new_coordinates)
 
+    def magnitud(self):
+        coordinates_square = [x**2 for x in self.coordinates]
+        return sqrt(sum(coordinates_square))
+
+    def normalized(self):
+        try:
+            magnitud = self.magnitud()
+            return self.times_scalar(1./magnitud)
+
+        except ZeroDivisionError:
+            raise Exception('Cannot normalize the zero vector')
+
 v = Vector([8.218, -9.341])
 w = Vector([-1.129, 2.111])
 print v.plus(w)
@@ -43,3 +57,13 @@ print v.minus(w)
 v = Vector([1.671,-1.012,-0.378])
 c = 7.41
 print v.times_scalar(c)
+
+print 'Magnitud'
+
+v = Vector([-0.221, 7.437])
+print v.magnitud()
+
+print 'Normalized'
+
+v = Vector([5.581, -2.136])
+print v.normalized()
